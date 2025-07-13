@@ -1,0 +1,84 @@
+{
+  "common": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "dashboard": "لوحة التحكم",
+    "documents": "الوثائق",
+    "review": "المراجعة",
+    "admin": "الإدارة",
+    "settings": "الإعدادات",
+    "profile": "الملف الشخصي",
+    "language": "اللغة",
+    "arabic": "العربية",
+    "english": "الإنجليزية",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "view": "عرض",
+    "approve": "موافقة",
+    "reject": "رفض",
+    "search": "بحث",
+    "filter": "تصفية"
+  },
+  "auth": {
+    "welcomeTitle": "مرحباً بكم في بوابة إدارة الوثائق القانونية",
+    "welcomeSubtitle": "المجلس الأعلى للقضاء - دولة قطر",
+    "loginWith": "تسجيل الدخول بواسطة مايكروسوفت",
+    "loginDescription": "وصول آمن إلى نظام إدارة الوثائق القانونية",
+    "demoLogin": "تسجيل دخول تجريبي",
+    "selectRole": "اختر دورك للمتابعة"
+  },
+  "dashboard": {
+    "title": "لوحة تحكم إدارة الوثائق",
+    "totalDocuments": "إجمالي الوثائق",
+    "pendingReview": "في انتظار المراجعة",
+    "approved": "موافق عليها",
+    "rejected": "مرفوضة",
+    "originalDocuments": "الوثائق الأصلية",
+    "redactedDocuments": "الوثائق المحررة",
+    "recentActivity": "النشاط الأخير",
+    "uploadDocument": "رفع وثيقة"
+  },
+  "documents": {
+    "name": "اسم الوثيقة",
+    "caseNumber": "رقم القضية",
+    "uploadDate": "تاريخ الرفع",
+    "status": "الحالة",
+    "score": "نقاط الذكاء الاصطناعي",
+    "language": "اللغة",
+    "actions": "الإجراءات",
+    "viewDocument": "عرض الوثيقة",
+    "approvePublish": "موافقة ونشر",
+    "requestReprocess": "طلب إعادة معالجة"
+  },
+  "review": {
+    "title": "قائمة انتظار المراجعة",
+    "priorityQueue": "قائمة الأولوية",
+    "lowConfidence": "ثقة منخفضة",
+    "requiresAttention": "يتطلب انتباه",
+    "bulkActions": "إجراءات مجمعة",
+    "bulkApprove": "موافقة مجمعة"
+  },
+  "admin": {
+    "title": "لوحة تحكم الإدارة",
+    "reports": "التقارير والتحليلات",
+    "userManagement": "إدارة المستخدمين",
+    "systemSettings": "إعدادات النظام",
+    "auditLogs": "سجلات التدقيق",
+    "maskingKeywords": "كلمات الإخفاء",
+    "integrationSettings": "إعدادات التكامل",
+    "aiSettings": "إعدادات الذكاء الاصطناعي",
+    "storage": "التخزين",
+    "security": "الأمان"
+  },
+  "setting": {
+    "keyword": "كلمة مفتاحية / نمط",
+    "language": "اللغة",
+    "category": "الفئة",
+    "type": "النوع",
+    "createdBy": "تم الإنشاء بواسطة",
+    "lastModified": "آخر تعديل ",
+    "Actions": "الإجراءات "
+  }
+}

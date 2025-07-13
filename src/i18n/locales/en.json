@@ -1,0 +1,84 @@
+{
+  "common": {
+    "login": "Login",
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "documents": "Documents",
+    "review": "Review",
+    "admin": "Admin",
+    "settings": "Settings",
+    "profile": "Profile",
+    "language": "Language",
+    "arabic": "Arabic",
+    "english": "English",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "approve": "Approve",
+    "reject": "Reject",
+    "search": "Search",
+    "filter": "Filter"
+  },
+  "auth": {
+    "welcomeTitle": "Welcome to Legal CMS Portal",
+    "welcomeSubtitle": "Supreme Judiciary Council of Qatar",
+    "loginWith": "Login with Microsoft",
+    "loginDescription": "Secure access to the legal document management system",
+    "demoLogin": "Demo Login",
+    "selectRole": "Select your role to continue"
+  },
+  "dashboard": {
+    "title": "Document Management Dashboard",
+    "totalDocuments": "Total Documents",
+    "pendingReview": "Pending Review",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "originalDocuments": "Original Documents",
+    "redactedDocuments": "Redacted Documents",
+    "recentActivity": "Recent Activity",
+    "uploadDocument": "Upload Document"
+  },
+  "documents": {
+    "name": "Document Name",
+    "caseNumber": "Case Number",
+    "uploadDate": "Upload Date",
+    "status": "Status",
+    "score": "AI Score",
+    "language": "Language",
+    "actions": "Actions",
+    "viewDocument": "View Document",
+    "approvePublish": "Approve & Publish",
+    "requestReprocess": "Request Reprocess"
+  },
+  "review": {
+    "title": "Review Workflow Queue",
+    "priorityQueue": "Priority Queue",
+    "lowConfidence": "Low Confidence",
+    "requiresAttention": "Requires Attention",
+    "bulkActions": "Bulk Actions",
+    "bulkApprove": "Bulk Approve"
+  },
+  "admin": {
+    "title": "Administration Dashboard",
+    "reports": "Reports & Analytics",
+    "userManagement": "User Management",
+    "systemSettings": "System Settings",
+    "auditLogs": "Audit Logs",
+    "maskingKeywords": "Masking Keywords",
+    "integrationSettings": "Integration Settings",
+    "aiSettings": "AI Settings",
+    "storage": "Storage",
+    "security": "Security"
+  },
+  "setting": {
+    "keyword": "Keyword/Pattern",
+    "language": "Language",
+    "category": "Category",
+    "type": "Type",
+    "createdBy": "Created By",
+    "lastModified": "Last Modified",
+    "actions": "Actions "
+  }
+}
