@@ -46,7 +46,7 @@
     "uploadDate": "Upload Date",
     "status": "Status",
     "score": "AI Score",
-    "language": "Language",
+    "documentType": "Document Type",
     "actions": "Actions",
     "viewDocument": "View Document",
     "approvePublish": "Approve & Publish",

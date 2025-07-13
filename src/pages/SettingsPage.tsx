@@ -206,13 +206,13 @@ const SettingsPage: React.FC = () => {
         onValueChange={setActiveTab}
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
       >
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="keywords">
             {t("admin.maskingKeywords")}
           </TabsTrigger>
           <TabsTrigger value="ai">{t("admin.aiSettings")}</TabsTrigger>
-          <TabsTrigger value="storage">{t("admin.storage")}</TabsTrigger>
-          <TabsTrigger value="security">{t("admin.security")}</TabsTrigger>
+          {/* <TabsTrigger value="storage">{t("admin.storage")}</TabsTrigger>
+          <TabsTrigger value="security">{t("admin.security")}</TabsTrigger> */}
         </TabsList>
 
         <TabsContent value="keywords" className="space-y-6">
@@ -425,7 +425,11 @@ const SettingsPage: React.FC = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Settings className="h-5 w-5 mr-2" />
+                  <Settings
+                    className={`h-5 w-5 ${
+                      i18n.language === "ar" ? "ml-2" : "mr-2"
+                    }`}
+                  />
                   {i18n.language === "ar"
                     ? "إعدادات معالجة الذكاء الاصطناعي "
                     : " AI Processing Settings"}
@@ -559,7 +563,7 @@ const SettingsPage: React.FC = () => {
                   </h4>
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2">
-                      <CheckCircle className="h-4 w-4 text-success" />
+                      <CheckCircle className="h-4 w-4 text-success ml-2" />
                       <span className="text-sm">
                         {i18n.language === "ar"
                           ? "تم إكمال الدُفعة ذات الثقة العالية"
@@ -567,7 +571,7 @@ const SettingsPage: React.FC = () => {
                       </span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <AlertTriangle className="h-4 w-4 text-warning" />
+                      <AlertTriangle className="h-4 w-4 text-warning ml-2" />
                       <span className="text-sm">
                         {i18n.language === "ar"
                           ? "٣ مستندات تحتاج إلى مراجعة يدوية"
@@ -583,7 +587,7 @@ const SettingsPage: React.FC = () => {
 
         <TabsContent value="storage" className="space-y-6">
           {/* Storage Settings */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -682,12 +686,12 @@ const SettingsPage: React.FC = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
+          </div> */}
         </TabsContent>
 
         <TabsContent value="security" className="space-y-6">
           {/* Security Settings */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -865,7 +869,7 @@ const SettingsPage: React.FC = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
+          </div> */}
         </TabsContent>
       </Tabs>
     </div>

@@ -68,13 +68,13 @@ const Sidebar: React.FC = () => {
     <div className="bg-indigo-800 text-white w-64 min-h-screen flex flex-col">
       <div className="p-6 border-b border-white/10">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
-          <div className="flex items-center justify-center w-40 h-20 bg-white rounded-lg p-1">
+          {/* <div className="flex items-center justify-center w-40 h-20 bg-white rounded-lg p-1">
             <img
               src="../../public/logo-ar.svg"
               alt="SJC Logo"
               className="w-full h-full object-contain"
             />
-          </div>
+          </div> */}
           <div>
             <h1 className="text-xl font-bold text-white">
               {isRTL ? "المجلس الأعلى للقضاء" : "Supreme Judiciary"}

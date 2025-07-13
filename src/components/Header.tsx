@@ -84,6 +84,7 @@ const Header: React.FC = () => {
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
+            <img src="/logo-ar.svg" alt="LogoAr" className="h-10 w-auto px-4" />
             <img
               src="/ITC-Portal.svg"
               alt="Logo"

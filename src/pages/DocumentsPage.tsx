@@ -55,6 +55,7 @@ const DocumentsPage: React.FC = () => {
       status: "pending",
       score: 85,
       language: "ar",
+      documentType: "PDF",
       source: "manual",
       size: "2.4 MB",
       sensitiveDataFound: ["SSN", "Phone Numbers", "Email Addresses"],
@@ -70,6 +71,7 @@ const DocumentsPage: React.FC = () => {
       status: "approved",
       score: 92,
       language: "en",
+      documentType: "DOCX",
       source: "integration",
       size: "1.8 MB",
       sensitiveDataFound: ["Names", "Case Numbers"],
@@ -85,6 +87,7 @@ const DocumentsPage: React.FC = () => {
       status: "rejected",
       score: 65,
       language: "ar",
+      documentType: "PPTX",
       source: "manual",
       size: "3.2 MB",
       sensitiveDataFound: ["SSN", "Bank Account", "Personal ID"],
@@ -100,6 +103,7 @@ const DocumentsPage: React.FC = () => {
       status: "processing",
       score: 78,
       language: "en",
+      documentType: "PDF",
       source: "integration",
       size: "2.1 MB",
       sensitiveDataFound: ["Email", "Phone"],
@@ -412,15 +416,18 @@ const DocumentsPage: React.FC = () => {
               </div> */}
               <div>
                 <h3 className="text-sm font-medium text-gray-500">
-                  AI Confidence
+                  Document Type
                 </h3>
-                <p
+                <p className="mt-2 text-2xl font-bold text-gray-900">
+                  {selectedDocument.documentType}
+                </p>
+                {/* <p
                   className={`mt-2 text-2xl font-bold ${getScoreColor(
                     selectedDocument.aiConfidence
                   )}`}
                 >
                   {selectedDocument.aiConfidence}%
-                </p>
+                </p> */}
               </div>
               <div>
                 <h3 className="text-sm font-medium text-gray-500">Pages</h3>
@@ -624,7 +631,7 @@ const DocumentsPage: React.FC = () => {
           </CardHeader>
         ) : (
           <CardHeader>
-            <CardTitle className="">Documents for Review</CardTitle>
+            <CardTitle className="">Documents Library</CardTitle>
             <CardDescription>
               Click on a document to view side-by-side comparison and make
               review decisions
@@ -650,7 +657,7 @@ const DocumentsPage: React.FC = () => {
                 <TableHead className="rtl:text-right">AI Confidence</TableHead>
                 {/* <TableHead className="rtl:text-right">Redacted Areas</TableHead> */}
                 <TableHead className="rtl:text-right">
-                  {t("documents.language")}
+                  {t("documents.documentType")}
                 </TableHead>
                 <TableHead className="rtl:text-right">
                   {t("documents.actions")}
@@ -693,7 +700,7 @@ const DocumentsPage: React.FC = () => {
                   </TableCell> */}
                   <TableCell>
                     <Badge variant="outline" className="uppercase">
-                      {doc.language}
+                      {doc.documentType}
                     </Badge>
                   </TableCell>
                   <TableCell className="rtl:text-right">

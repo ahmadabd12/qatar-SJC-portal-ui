@@ -35,6 +35,7 @@ import {
   CheckCircle,
   XCircle,
   RotateCcw,
+  GitCompareArrows,
 } from "lucide-react";
 
 interface ReviewDocument {
@@ -43,6 +44,7 @@ interface ReviewDocument {
   caseNumber: string;
   uploadDate: string;
   language: "ar" | "en";
+  documentType: "PDF" | "DOCX" | "PPTX";
   aiScore: number;
   status: "pending" | "low_confidence" | "requires_attention";
   uploadSource: "manual" | "integration";
@@ -56,6 +58,7 @@ const mockDocuments: ReviewDocument[] = [
     caseNumber: "SC-2024-001",
     uploadDate: "2024-01-10",
     language: "ar",
+    documentType: "PDF",
     aiScore: 45,
     status: "low_confidence",
     uploadSource: "manual",
@@ -67,6 +70,7 @@ const mockDocuments: ReviewDocument[] = [
     caseNumber: "CC-2024-089",
     uploadDate: "2024-01-09",
     language: "en",
+    documentType: "DOCX",
     aiScore: 72,
     status: "pending",
     uploadSource: "integration",
@@ -78,6 +82,7 @@ const mockDocuments: ReviewDocument[] = [
     caseNumber: "FC-2024-234",
     uploadDate: "2024-01-08",
     language: "ar",
+    documentType: "PPTX",
     aiScore: 38,
     status: "requires_attention",
     uploadSource: "manual",
@@ -180,10 +185,10 @@ const ReviewPage: React.FC = () => {
           <h1 className="text-3xl font-bold text-foreground">
             {t("review.title")}
           </h1>
-          <p className="text-muted-foreground mt-2">
+          {/* <p className="text-muted-foreground mt-2">
             {t("review.priorityQueue")} - {filteredDocuments.length}{" "}
             {t("documents.name").toLowerCase()}
-          </p>
+          </p> */}
         </div>
       </div>
 
@@ -194,25 +199,12 @@ const ReviewPage: React.FC = () => {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
-              <AlertTriangle className="h-8 w-8 text-destructive" />
+              <CheckCircle className="h-8 w-8 text-green-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-muted-foreground">
-                  {t("review.lowConfidence")}
+                  {isRTL ? "تمت المراجعة اليوم" : "Today Reviewed"}
                 </p>
-                <p className="text-2xl font-bold">12</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4">
-              <Clock className="h-8 w-8 text-warning text-yellow-600" />
-              <div className="ml-4">
-                <p className="text-sm font-medium text-muted-foreground">
-                  {t("review.requiresAttention")}
-                </p>
-                <p className="text-2xl font-bold">8</p>
+                <p className="text-2xl font-bold">15</p>
               </div>
             </div>
           </CardContent>
@@ -233,12 +225,25 @@ const ReviewPage: React.FC = () => {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
-              <CheckCircle className="h-8 w-8 text-green-600" />
+              <Clock className="h-8 w-8 text-warning text-yellow-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-muted-foreground">
-                  {isRTL ? "تمت المراجعة اليوم" : "Today Reviewed"}
+                  {t("review.requiresAttention")}
                 </p>
-                <p className="text-2xl font-bold">15</p>
+                <p className="text-2xl font-bold">8</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <AlertTriangle className="h-8 w-8 text-destructive" />
+              <div className="ml-4">
+                <p className="text-sm font-medium text-muted-foreground">
+                  {t("review.lowConfidence")}
+                </p>
+                <p className="text-2xl font-bold">12</p>
               </div>
             </div>
           </CardContent>
@@ -357,7 +362,7 @@ const ReviewPage: React.FC = () => {
                   {t("documents.score")}
                 </TableHead>
                 <TableHead className={isRTL ? "rtl:text-right" : ""}>
-                  {t("documents.language")}
+                  {t("documents.documentType")}
                 </TableHead>
                 <TableHead className={isRTL ? "rtl:text-right" : ""}>
                   {t("documents.uploadDate")}
@@ -408,74 +413,93 @@ const ReviewPage: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline">
-                      {doc.language.toUpperCase()}
+                      {doc.documentType.toUpperCase()}
                     </Badge>
                   </TableCell>
                   <TableCell>{doc.uploadDate}</TableCell>
                   <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuItem>
-                          {isRTL ? (
-                            <>
-                              <Eye className="h-4 w-4 mr-2" />
-                              <span>عرض المستند</span>
-                            </>
-                          ) : (
-                            <>
-                              <Eye className="h-4 w-4 mr-2" />
-                              <span>{t("documents.viewDocument")}</span>
-                            </>
-                          )}
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          {isRTL ? (
-                            <>
-                              {" "}
-                              <CheckCircle className="h-4 w-4 mr-2" />
-                              <span>نشر وموافقة</span>
-                            </>
-                          ) : (
-                            <>
-                              <CheckCircle className="h-4 w-4 mr-2" />
-                              <span>{t("documents.approvePublish")}</span>
-                            </>
-                          )}
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          {isRTL ? (
-                            <>
-                              {" "}
-                              <XCircle className="h-4 w-4 mr-2" />
-                              <span>رفض</span>
-                            </>
-                          ) : (
-                            <>
-                              <XCircle className="h-4 w-4 mr-2" />
-                              <span>Reject</span>
-                            </>
-                          )}
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          {isRTL ? (
-                            <>
-                              <RotateCcw className="h-4 w-4 mr-2" />
-                              <span>إعادة المعالجة</span>
-                            </>
-                          ) : (
-                            <>
-                              <RotateCcw className="h-4 w-4 mr-2" />
-                              <span>{t("documents.requestReprocess")}</span>
-                            </>
-                          )}
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="flex items-center space-x-1 rtl:space-x-reverse"
+                      >
+                        {i18n.language === "ar" ? (
+                          <>
+                            <span>مراجعة</span>
+                            <GitCompareArrows className="h-4 w-4" />
+                          </>
+                        ) : (
+                          <>
+                            <GitCompareArrows className="h-4 w-4" />
+                            <span>Review</span>
+                          </>
+                        )}
+                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="sm">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem>
+                            {isRTL ? (
+                              <>
+                                <Eye className="h-4 w-4 mr-2" />
+                                <span>عرض المستند</span>
+                              </>
+                            ) : (
+                              <>
+                                <Eye className="h-4 w-4 mr-2" />
+                                <span>{t("documents.viewDocument")}</span>
+                              </>
+                            )}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            {isRTL ? (
+                              <>
+                                {" "}
+                                <CheckCircle className="h-4 w-4 mr-2" />
+                                <span>نشر وموافقة</span>
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircle className="h-4 w-4 mr-2" />
+                                <span>{t("documents.approvePublish")}</span>
+                              </>
+                            )}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            {isRTL ? (
+                              <>
+                                {" "}
+                                <XCircle className="h-4 w-4 mr-2" />
+                                <span>رفض</span>
+                              </>
+                            ) : (
+                              <>
+                                <XCircle className="h-4 w-4 mr-2" />
+                                <span>Reject</span>
+                              </>
+                            )}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            {isRTL ? (
+                              <>
+                                <RotateCcw className="h-4 w-4 mr-2" />
+                                <span>إعادة المعالجة</span>
+                              </>
+                            ) : (
+                              <>
+                                <RotateCcw className="h-4 w-4 mr-2" />
+                                <span>{t("documents.requestReprocess")}</span>
+                              </>
+                            )}
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

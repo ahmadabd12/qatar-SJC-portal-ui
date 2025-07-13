@@ -46,7 +46,7 @@
     "uploadDate": "تاريخ الرفع",
     "status": "الحالة",
     "score": "نقاط الذكاء الاصطناعي",
-    "language": "اللغة",
+    "documentType": "نوع المستند",
     "actions": "الإجراءات",
     "viewDocument": "عرض الوثيقة",
     "approvePublish": "موافقة ونشر",

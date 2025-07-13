@@ -63,12 +63,19 @@ const documentStats = [
   { name: "Jun", total: 190, approved: 170, rejected: 8 },
 ];
 const aiScoreDistribution = [
-  { range: "0-20%", count: 5, color: "#b5800a" },
-  { range: "21-40%", count: 12, color: "#2e314ecc" },
-  { range: "41-60%", count: 18, color: "#d97706" },
-  { range: "61-80%", count: 45, color: "#65a30dcc" },
-  { range: "81-100%", count: 120, color: "#911235cc" },
+  { range: "0-20%", count: 5, color: "#6366f1" }, // indigo-500
+  { range: "21-40%", count: 12, color: "#911235" }, // maroon
+  { range: "41-60%", count: 18, color: "#facc15" }, // yellow-400
+  { range: "61-80%", count: 45, color: "#22c55e" }, // green-500
+  { range: "81-100%", count: 120, color: "#3730a3" }, // indigo-800
 ];
+// const aiScoreDistribution = [
+//   { range: "0-20%", count: 5, color: "#b5800a" },
+//   { range: "21-40%", count: 12, color: "#2e314ecc" },
+//   { range: "41-60%", count: 18, color: "#d97706" },
+//   { range: "61-80%", count: 45, color: "#65a30dcc" },
+//   { range: "81-100%", count: 120, color: "#911235cc" },
+// ];
 // const aiScoreDistribution = [
 //   { range: "0-20%", count: 5, color: "#dc2626" },
 //   { range: "21-40%", count: 12, color: "#ea580c" },
@@ -171,7 +178,7 @@ const AdminPage: React.FC = () => {
         onValueChange={setActiveTab}
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
       >
-        <TabsList className={`grid w-full grid-cols-5`}>
+        <TabsList className={`grid w-full grid-cols-4`}>
           <TabsTrigger value="overview">
             {i18n.language === "ar" ? "نظرة عامة" : "Overview"}
           </TabsTrigger>
@@ -183,11 +190,11 @@ const AdminPage: React.FC = () => {
               ? "إدارة المستخدمين"
               : t("admin.userManagement")}
           </TabsTrigger>
-          <TabsTrigger value="system">
+          {/* <TabsTrigger value="system">
             {i18n.language === "ar"
               ? "إعدادات النظام"
               : t("admin.systemSettings")}
-          </TabsTrigger>
+          </TabsTrigger> */}
           <TabsTrigger value="errors">
             {i18n.language === "ar" ? "سجلات الأخطاء" : "Error Logs"}
           </TabsTrigger>
@@ -237,7 +244,7 @@ const AdminPage: React.FC = () => {
                 </div>
               </CardContent>
             </Card>
-
+            {/* 
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
@@ -257,7 +264,7 @@ const AdminPage: React.FC = () => {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             <Card>
               <CardContent className="p-6">

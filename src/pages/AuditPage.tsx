@@ -169,7 +169,7 @@ const AuditPage: React.FC = () => {
       case "approve":
         return <CheckCircle className="h-4 w-4 text-success" />;
       case "reject":
-        return <XCircle className="h-4 w-4 text-destructive" />;
+        return <XCircle className="h-4 w-4 text-yellow-600" />;
       case "upload":
         return <Upload className="h-4 w-4 text-primary" />;
       case "edit":
@@ -188,9 +188,9 @@ const AuditPage: React.FC = () => {
   const getActionColor = (actionType: string) => {
     switch (actionType) {
       case "approve":
-        return "bg-green-700 text-white";
+        return "bg-indigo-800 text-white";
       case "reject":
-        return "bg-destructive text-destructive-foreground";
+        return "bg-[#efdcaf] text-yellow-600";
       case "login":
         return "bg-maroon-800 text-white";
       case "upload":
@@ -205,11 +205,11 @@ const AuditPage: React.FC = () => {
   const getRoleColor = (role: string) => {
     switch (role) {
       case "Admin":
-        return "bg-destructive text-destructive-foreground";
+        return "bg-maroon-800 text-white";
       case "Reviewer":
         return "bg-indigo-800 text-white";
       case "Publisher":
-        return "bg-secondary text-secondary-foreground hover:text-white";
+        return "bg-secondary text-secondary-foreground"; //hover:text-white
       default:
         return "bg-muted text-muted-foreground";
     }
@@ -547,16 +547,16 @@ const AuditPage: React.FC = () => {
                 >
                   {i18n.language === "ar" ? "التفاصيل" : "Details"}
                 </TableHead>
-                <TableHead
+                {/* <TableHead
                   className={i18n.language === "ar" ? "rtl:text-right" : ""}
                 >
                   {i18n.language === "ar" ? "عنوان IP" : "IP Address"}
-                </TableHead>
-                <TableHead
+                </TableHead> */}
+                {/* <TableHead
                   className={i18n.language === "ar" ? "rtl:text-right" : ""}
                 >
                   {i18n.language === "ar" ? "الجلسة" : "Session"}
-                </TableHead>
+                </TableHead> */}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -603,12 +603,12 @@ const AuditPage: React.FC = () => {
                       {i18n.language === "ar" ? log.Ardetails : log.details}
                     </p>
                   </TableCell>
-                  <TableCell className="font-mono text-sm">
+                  {/* <TableCell className="font-mono text-sm">
                     {log.ipAddress}
                   </TableCell>
                   <TableCell className="font-mono text-xs text-muted-foreground">
                     {log.sessionId}
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
