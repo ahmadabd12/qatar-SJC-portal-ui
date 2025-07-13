@@ -164,13 +164,13 @@ const AdminPage: React.FC = () => {
               : "Comprehensive system management and analytics"}
           </p>
         </div>
-        <Button
+        {/* <Button
           onClick={exportReport}
           className="bg-indigo-800 hover:bg-indigo-800/90 text-white"
         >
           {i18n.language === "ar" ? "تصدير التقرير" : "Export Report"}
           <Download className="h-4 w-4 mr-2" />
-        </Button>
+        </Button> */}
       </div>
 
       <Tabs

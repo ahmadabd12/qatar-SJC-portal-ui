@@ -50,7 +50,8 @@
     "actions": "Actions",
     "viewDocument": "View Document",
     "approvePublish": "Approve & Publish",
-    "requestReprocess": "Request Reprocess"
+    "requestReprocess": "Request Reprocess",
+    "AIConfidence": "AI Confidence"
   },
   "review": {
     "title": "Review Workflow Queue",

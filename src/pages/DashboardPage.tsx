@@ -89,9 +89,9 @@ const DashboardPage: React.FC = () => {
           { name: "مرفوض", value: 5, color: "#efdcaf" },
         ]
       : [
-          { name: "Approved", value: 85, color: "#911235" },
+          { name: "Approved", value: 85, color: "#efdcaf" },
           { name: "Pending", value: 10, color: "#2e314e" },
-          { name: "Rejected", value: 5, color: "#efdcaf" },
+          { name: "Rejected", value: 5, color: "#911235" },
         ];
 
   const recentActivities = [
@@ -218,8 +218,8 @@ const DashboardPage: React.FC = () => {
                 <Tooltip />
                 {/* <Bar dataKey="approved" fill="#10B981" name="Approved" />
                 <Bar dataKey="rejected" fill="#EF4444" name="Rejected" /> */}
-                <Bar dataKey="approved" fill="#911235" name="Approved" />
-                <Bar dataKey="rejected" fill="#efdcaf" name="Rejected" />
+                <Bar dataKey="approved" fill="#efdcaf" name="Approved" />
+                <Bar dataKey="rejected" fill="#911235" name="Rejected" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>

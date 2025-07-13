@@ -109,8 +109,8 @@ const Sidebar: React.FC = () => {
       <div className="p-4 border-t border-white/10">
         <div className="text-xs text-maroon-300 text-center">
           {isRTL
-            ? "نظام إدارة الوثائق القانونية"
-            : "Legal Document Management System"}
+            ? "© 2025 السلطة القضائية العليا – دولة قطر. جميع الحقوق محفوظة."
+            : "© 2025 Supreme Judiciary, State of Qatar. All rights reserved."}
         </div>
       </div>
     </div>

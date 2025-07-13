@@ -556,13 +556,13 @@ const DocumentsPage: React.FC = () => {
             </p>
           </div>
           <div className="flex space-x-2 rtl:space-x-reverse">
-            <Button
+            {/* <Button
               variant="outline"
               className="flex items-center space-x-2 rtl:space-x-reverse"
             >
               <span>تصدير</span>
               <Download className="h-4 w-4" />
-            </Button>
+            </Button> */}
             <Button className="bg-maroon-800 hover:bg-indigo-800 text-white flex items-center space-x-2 rtl:space-x-reverse">
               <span>رفع مستند</span>
               <Upload className="h-4 w-4" />
@@ -654,7 +654,10 @@ const DocumentsPage: React.FC = () => {
                 <TableHead className="rtl:text-right">
                   {t("documents.status")}
                 </TableHead>
-                <TableHead className="rtl:text-right">AI Confidence</TableHead>
+                <TableHead className="rtl:text-right">
+                  {" "}
+                  {t("documents.AIConfidence")}
+                </TableHead>
                 {/* <TableHead className="rtl:text-right">Redacted Areas</TableHead> */}
                 <TableHead className="rtl:text-right">
                   {t("documents.documentType")}

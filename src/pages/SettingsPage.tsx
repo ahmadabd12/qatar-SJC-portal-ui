@@ -410,7 +410,7 @@ const SettingsPage: React.FC = () => {
                             size="sm"
                             onClick={() => handleDeleteKeyword(keyword.id)}
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-4 w-4 text-red-800" />
                           </Button>
                         </div>
                       </TableCell>
@@ -484,7 +484,7 @@ const SettingsPage: React.FC = () => {
                       style={i18n.language === "ar" ? { direction: "rtl" } : {}}
                     />
                   </div>
-
+                  {/* 
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">
                       <Label>
@@ -502,7 +502,7 @@ const SettingsPage: React.FC = () => {
                       checked={strictMode}
                       onCheckedChange={setStrictMode}
                     />
-                  </div>
+                  </div> */}
                 </div>
 
                 <Button onClick={handleSaveSystemSettings} className="w-full">
@@ -558,7 +558,7 @@ const SettingsPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t">
+                {/* <div className="pt-4 border-t">
                   <h4 className="font-medium mb-2">
                     {i18n.language === "ar"
                       ? " الأداء الأخير"
@@ -582,7 +582,7 @@ const SettingsPage: React.FC = () => {
                       </span>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </CardContent>
             </Card>
           </div>

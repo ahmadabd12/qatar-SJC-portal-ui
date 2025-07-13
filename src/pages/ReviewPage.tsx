@@ -134,6 +134,9 @@ const ReviewPage: React.FC = () => {
       setSelectedDocuments(selectedDocuments.filter((id) => id !== docId));
     }
   };
+  const handleDocumentReview = (doc: any) => {
+    setSelectedDocuments(doc);
+  };
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
@@ -422,6 +425,12 @@ const ReviewPage: React.FC = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() =>
+                          window.open(
+                            "http://localhost:8080/documents",
+                            "_blank"
+                          )
+                        }
                         className="flex items-center space-x-1 rtl:space-x-reverse"
                       >
                         {i18n.language === "ar" ? (
@@ -456,7 +465,7 @@ const ReviewPage: React.FC = () => {
                               </>
                             )}
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
+                          {/* <DropdownMenuItem>
                             {isRTL ? (
                               <>
                                 {" "}
@@ -496,7 +505,7 @@ const ReviewPage: React.FC = () => {
                                 <span>{t("documents.requestReprocess")}</span>
                               </>
                             )}
-                          </DropdownMenuItem>
+                          </DropdownMenuItem> */}
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>

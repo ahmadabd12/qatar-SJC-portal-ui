@@ -50,7 +50,8 @@
     "actions": "الإجراءات",
     "viewDocument": "عرض الوثيقة",
     "approvePublish": "موافقة ونشر",
-    "requestReprocess": "طلب إعادة معالجة"
+    "requestReprocess": "طلب إعادة معالجة",
+    "AIConfidence": "ثقة AI"
   },
   "review": {
     "title": "قائمة انتظار المراجعة",
