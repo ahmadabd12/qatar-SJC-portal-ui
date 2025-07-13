@@ -4,6 +4,7 @@ import { Button } from "../components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
@@ -36,6 +37,9 @@ import {
   XCircle,
   RotateCcw,
   GitCompareArrows,
+  ArrowLeft,
+  Shield,
+  RefreshCw,
 } from "lucide-react";
 
 interface ReviewDocument {
@@ -49,8 +53,12 @@ interface ReviewDocument {
   status: "pending" | "low_confidence" | "requires_attention";
   uploadSource: "manual" | "integration";
   priority: "high" | "medium" | "low";
+  sensitiveDataFound: string[];
+  redactedAreas: number;
+  aiConfidence: number;
+  pages: number;
+  size: string;
 }
-
 const mockDocuments: ReviewDocument[] = [
   {
     id: "1",
@@ -63,6 +71,11 @@ const mockDocuments: ReviewDocument[] = [
     status: "low_confidence",
     uploadSource: "manual",
     priority: "high",
+    sensitiveDataFound: ["اسم", "رقم هوية", "عنوان"],
+    redactedAreas: 3,
+    aiConfidence: 45,
+    pages: 12,
+    size: "1.2MB",
   },
   {
     id: "2",
@@ -75,6 +88,11 @@ const mockDocuments: ReviewDocument[] = [
     status: "pending",
     uploadSource: "integration",
     priority: "medium",
+    sensitiveDataFound: ["Name", "Passport Number"],
+    redactedAreas: 1,
+    aiConfidence: 72,
+    pages: 8,
+    size: "850KB",
   },
   {
     id: "3",
@@ -87,8 +105,51 @@ const mockDocuments: ReviewDocument[] = [
     status: "requires_attention",
     uploadSource: "manual",
     priority: "high",
+    sensitiveDataFound: ["اسم", "تاريخ ميلاد"],
+    redactedAreas: 2,
+    aiConfidence: 38,
+    pages: 5,
+    size: "600KB",
   },
 ];
+// const mockDocuments: ReviewDocument[] = [
+//   {
+//     id: "1",
+//     name: "قرار_محكمة_عليا_2024_001.pdf",
+//     caseNumber: "SC-2024-001",
+//     uploadDate: "2024-01-10",
+//     language: "ar",
+//     documentType: "PDF",
+//     aiScore: 45,
+//     status: "low_confidence",
+//     uploadSource: "manual",
+//     priority: "high",
+//   },
+//   {
+//     id: "2",
+//     name: "commercial_dispute_resolution.pdf",
+//     caseNumber: "CC-2024-089",
+//     uploadDate: "2024-01-09",
+//     language: "en",
+//     documentType: "DOCX",
+//     aiScore: 72,
+//     status: "pending",
+//     uploadSource: "integration",
+//     priority: "medium",
+//   },
+//   {
+//     id: "3",
+//     name: "قضية_الأحوال_الشخصية_234.pdf",
+//     caseNumber: "FC-2024-234",
+//     uploadDate: "2024-01-08",
+//     language: "ar",
+//     documentType: "PPTX",
+//     aiScore: 38,
+//     status: "requires_attention",
+//     uploadSource: "manual",
+//     priority: "high",
+//   },
+// ];
 
 const ReviewPage: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -96,6 +157,7 @@ const ReviewPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState<"score" | "date" | "priority">("score");
   const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [selectedDocument, setSelectedDocument] = useState<any | null>(null);
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -121,12 +183,6 @@ const ReviewPage: React.FC = () => {
     }
   };
 
-  const getScoreColor = (score: number) => {
-    if (score < 50) return "text-maroon-700 ";
-    if (score < 70) return "text-warning";
-    return "text-success";
-  };
-
   const handleSelectDocument = (docId: string, checked: boolean) => {
     if (checked) {
       setSelectedDocuments([...selectedDocuments, docId]);
@@ -135,7 +191,7 @@ const ReviewPage: React.FC = () => {
     }
   };
   const handleDocumentReview = (doc: any) => {
-    setSelectedDocuments(doc);
+    setSelectedDocument(doc);
   };
 
   const handleSelectAll = (checked: boolean) => {
@@ -154,6 +210,44 @@ const ReviewPage: React.FC = () => {
   const handleBulkReject = () => {
     console.log("Bulk rejecting documents:", selectedDocuments);
     setSelectedDocuments([]);
+  };
+  const getScoreColor = (score: number) => {
+    if (score < 50) return "text-maroon-700";
+    if (score < 70) return "text-warning";
+    return "text-success";
+  };
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "low_confidence":
+        return (
+          <Badge className="bg-red-100 text-red-800">Low Confidence</Badge>
+        );
+      case "requires_attention":
+        return (
+          <Badge className="bg-yellow-100 text-yellow-800">
+            Requires Attention
+          </Badge>
+        );
+      default:
+        return <Badge className="bg-blue-100 text-blue-800">Pending</Badge>;
+    }
+  };
+
+  // And your handlers like:
+  const handleApprove = () => {
+    console.log("Approved", selectedDocument);
+    setSelectedDocument(null);
+  };
+
+  const handleReject = () => {
+    console.log("Rejected", selectedDocument);
+    setSelectedDocument(null);
+  };
+
+  const handleRequestChanges = () => {
+    console.log("Requested changes", selectedDocument);
+    setSelectedDocument(null);
   };
 
   const filteredDocuments = mockDocuments
@@ -180,7 +274,372 @@ const ReviewPage: React.FC = () => {
     });
 
   const isRTL = i18n.language === "ar";
+  if (selectedDocument) {
+    return i18n.language === "ar" ? (
+      <div className="space-y-6 rtl">
+        {/* Header with back button */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4 rtl:space-x-reverse">
+            <Button
+              variant="outline"
+              onClick={() => setSelectedDocument(null)}
+              className="flex items-center space-x-2 rtl:space-x-reverse"
+            >
+              <ArrowLeft
+                className={`h-4 w-4${
+                  i18n.language === "ar" ? " rotate-180" : ""
+                }`}
+              />
+              <span>رجوع إلى المستندات</span>
+            </Button>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                مراجعة المستند: {selectedDocument.name}
+              </h1>
+              <p className="text-gray-600 mt-1">
+                القضية {selectedDocument.caseNumber} • دقة الذكاء الاصطناعي:{" "}
+                {selectedDocument.aiConfidence}%
+              </p>
+            </div>
+          </div>
+          <div className="flex space-x-2 rtl:space-x-reverse">
+            {getStatusBadge(selectedDocument.status)}
+          </div>
+        </div>
 
+        {/* Document Information */}
+        <Card>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div>
+                <h3 className="text-sm font-medium text-gray-500">
+                  البيانات الحساسة المكتشفة
+                </h3>
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {selectedDocument.sensitiveDataFound.map(
+                    (item: string, index: number) => (
+                      <Badge key={index} variant="outline" className="text-xs">
+                        {item}
+                      </Badge>
+                    )
+                  )}
+                </div>
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-gray-500">
+                  المناطق المحجوبة
+                </h3>
+                <p className="mt-2 text-2xl font-bold text-maroon-600">
+                  {selectedDocument.redactedAreas}
+                </p>
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-gray-500">
+                  دقة الذكاء الاصطناعي
+                </h3>
+                <p
+                  className={`mt-2 text-2xl font-bold ${getScoreColor(
+                    selectedDocument.aiConfidence
+                  )}`}
+                >
+                  {selectedDocument.aiConfidence}%
+                </p>
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-gray-500">
+                  عدد الصفحات
+                </h3>
+                <p className="mt-2 text-2xl font-bold text-gray-900">
+                  {selectedDocument.pages}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Side-by-side document comparison */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Original Document */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 rtl:space-x-reverse">
+                <FileText className="h-5 w-5" />
+                <span>المستند الأصلي</span>
+              </CardTitle>
+              <CardDescription>المستند كما تم رفعه</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center min-h-[500px] flex items-center justify-center">
+                <div>
+                  <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-600 mb-2">معاينة المستند الأصلي</p>
+                  <p className="text-sm text-gray-500">
+                    {selectedDocument.name}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {selectedDocument.size}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Redacted Document */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 rtl:space-x-reverse">
+                <Shield className="h-5 w-5" />
+                <span>المستند المحجوب</span>
+              </CardTitle>
+              <CardDescription>
+                المستند بعد معالجة الذكاء الاصطناعي وإخفاء البيانات الحساسة
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-yellow-50 border-2 border-dashed border-yellow-300 rounded-lg p-8 text-center min-h-[500px] flex items-center justify-center">
+                <div>
+                  <Shield className="h-16 w-16 text-yellow-600 mx-auto mb-4" />
+                  <p className="text-yellow-800 mb-2">معاينة المستند المحجوب</p>
+                  <p className="text-sm text-yellow-700">
+                    {selectedDocument.redactedAreas} مناطق محجوبة
+                  </p>
+                  <div className="mt-4 space-y-2">
+                    <div className="bg-black h-4 w-24 mx-auto rounded"></div>
+                    <div className="bg-black h-4 w-16 mx-auto rounded"></div>
+                    <div className="bg-black h-4 w-20 mx-auto rounded"></div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Action Buttons */}
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                <GitCompareArrows className="h-5 w-5 text-gray-500" />
+                <div>
+                  <h3 className="font-medium">قرار المراجعة</h3>
+                  <p className="text-sm text-gray-600">
+                    قارن بين المستندين واتخذ قرارًا بشأن جودة الحجب
+                  </p>
+                </div>
+              </div>
+              <div className="flex space-x-3 rtl:space-x-reverse">
+                <Button
+                  variant="outline"
+                  onClick={handleRequestChanges}
+                  className="flex items-center space-x-2 rtl:space-x-reverse"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                  <span>طلب تعديلات</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleReject}
+                  className="flex items-center space-x-2 rtl:space-x-reverse text-red-600 border-red-600 hover:bg-red-50"
+                >
+                  <XCircle className="h-4 w-4" />
+                  <span>رفض</span>
+                </Button>
+                <Button
+                  onClick={handleApprove}
+                  className="bg-green-700 hover:bg-green-600 text-white flex items-center space-x-2 rtl:space-x-reverse"
+                >
+                  <CheckCircle className="h-4 w-4" />
+                  <span>قبول ونشر</span>
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    ) : (
+      <div className="space-y-6">
+        {/* Header with back button */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4 rtl:space-x-reverse">
+            <Button
+              variant="outline"
+              onClick={() => setSelectedDocument(null)}
+              className="flex items-center space-x-2 rtl:space-x-reverse"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Back to Documents</span>
+            </Button>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Document Review: {selectedDocument.name}
+              </h1>
+              <p className="text-gray-600 mt-1">
+                Case {selectedDocument.caseNumber} • AI Confidence:{" "}
+                {selectedDocument.aiConfidence}%
+              </p>
+            </div>
+          </div>
+          <div className="flex space-x-2 rtl:space-x-reverse">
+            {getStatusBadge(selectedDocument.status)}
+          </div>
+        </div>
+
+        {/* Document Information */}
+        <Card>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div>
+                <h3 className="text-sm font-medium text-gray-500">
+                  Sensitive Data Found
+                </h3>
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {selectedDocument.sensitiveDataFound.map(
+                    (item: string, index: number) => (
+                      <Badge key={index} variant="outline" className="text-xs">
+                        {item}
+                      </Badge>
+                    )
+                  )}
+                </div>
+              </div>
+              {/* <div>
+                <h3 className="text-sm font-medium text-gray-500">
+                  Redacted Areas
+                </h3>
+                <p className="mt-2 text-2xl font-bold text-maroon-600">
+                  {selectedDocument.redactedAreas}
+                </p>
+              </div> */}
+              <div>
+                <h3 className="text-sm font-medium text-gray-500">
+                  Document Type
+                </h3>
+                <p className="mt-2 text-2xl font-bold text-gray-900">
+                  {selectedDocument.documentType}
+                </p>
+                {/* <p
+                  className={`mt-2 text-2xl font-bold ${getScoreColor(
+                    selectedDocument.aiConfidence
+                  )}`}
+                >
+                  {selectedDocument.aiConfidence}%
+                </p> */}
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-gray-500">Pages</h3>
+                <p className="mt-2 text-2xl font-bold text-gray-900">
+                  {selectedDocument.pages}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Side-by-side document comparison */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Original Document */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 rtl:space-x-reverse">
+                <FileText className="h-5 w-5" />
+                <span>Original Document</span>
+              </CardTitle>
+              <CardDescription>Source document as uploaded</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center min-h-[500px] flex items-center justify-center">
+                <div>
+                  <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-600 mb-2">
+                    Original Document Preview
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {selectedDocument.name}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {selectedDocument.size}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Redacted Document */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 rtl:space-x-reverse">
+                <Shield className="h-5 w-5" />
+                <span>Redacted Document</span>
+              </CardTitle>
+              <CardDescription>
+                AI-processed document with sensitive data masked
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-yellow-50 border-2 border-dashed border-yellow-300 rounded-lg p-8 text-center min-h-[500px] flex items-center justify-center">
+                <div>
+                  <Shield className="h-16 w-16 text-yellow-600 mx-auto mb-4" />
+                  <p className="text-yellow-800 mb-2">
+                    Redacted Document Preview
+                  </p>
+                  <p className="text-sm text-yellow-700">
+                    {selectedDocument.redactedAreas} areas redacted
+                  </p>
+                  <div className="mt-4 space-y-2">
+                    <div className="bg-black h-4 w-24 mx-auto rounded"></div>
+                    <div className="bg-black h-4 w-16 mx-auto rounded"></div>
+                    <div className="bg-black h-4 w-20 mx-auto rounded"></div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Action Buttons */}
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                <GitCompareArrows className="h-5 w-5 text-gray-500" />
+                <div>
+                  <h3 className="font-medium">Review Decision</h3>
+                  <p className="text-sm text-gray-600">
+                    Compare both documents and decide on the redaction quality
+                  </p>
+                </div>
+              </div>
+              <div className="flex space-x-3 rtl:space-x-reverse">
+                <Button
+                  variant="outline"
+                  onClick={handleRequestChanges}
+                  className="flex items-center space-x-2 rtl:space-x-reverse"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                  <span>Request Changes</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleReject}
+                  className="flex items-center space-x-2 rtl:space-x-reverse text-red-600 border-red-600 hover:bg-red-50"
+                >
+                  <XCircle className="h-4 w-4" />
+                  <span>Reject</span>
+                </Button>
+                <Button
+                  onClick={handleApprove}
+                  className="bg-green-700 hover:bg-green-600 text-white flex items-center space-x-2 rtl:space-x-reverse"
+                >
+                  <CheckCircle className="h-4 w-4" />
+                  <span>Approve & Publish</span>
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
   return (
     <div className={`space-y-6${isRTL ? " rtl" : ""}`}>
       <div className="flex items-center justify-between">
@@ -425,12 +884,7 @@ const ReviewPage: React.FC = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() =>
-                          window.open(
-                            "http://localhost:8080/documents",
-                            "_blank"
-                          )
-                        }
+                        onClick={() => handleDocumentReview(doc)}
                         className="flex items-center space-x-1 rtl:space-x-reverse"
                       >
                         {i18n.language === "ar" ? (
@@ -445,6 +899,7 @@ const ReviewPage: React.FC = () => {
                           </>
                         )}
                       </Button>
+
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="sm">
