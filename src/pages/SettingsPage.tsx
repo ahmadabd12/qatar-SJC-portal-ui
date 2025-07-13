@@ -153,7 +153,10 @@ const SettingsPage: React.FC = () => {
       case "en":
         return "🇺🇸";
       case "both":
-        return "🌐";
+        // Use Lucide Globe icon for consistency
+        return (
+          <Globe className="inline h-4 w-4 text-indigo-800 align-text-bottom" />
+        );
       default:
         return "❓";
     }

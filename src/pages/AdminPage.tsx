@@ -63,11 +63,11 @@ const documentStats = [
   { name: "Jun", total: 190, approved: 170, rejected: 8 },
 ];
 const aiScoreDistribution = [
-  { range: "0-20%", count: 5, color: "#6366f1" }, // indigo-500
-  { range: "21-40%", count: 12, color: "#911235" }, // maroon
-  { range: "41-60%", count: 18, color: "#facc15" }, // yellow-400
-  { range: "61-80%", count: 45, color: "#22c55e" }, // green-500
-  { range: "81-100%", count: 120, color: "#3730a3" }, // indigo-800
+  { range: "0-20%", count: 5, color: "#f59e42" }, // yellow-600 (gradient: #f59e42)
+  { range: "21-40%", count: 12, color: "#911235" }, // maroon-800
+  { range: "41-60%", count: 18, color: "#3730a3" }, // indigo-800
+  { range: "61-80%", count: 45, color: "#a5b4fc" }, // indigo-300 (gradient)
+  { range: "81-100%", count: 120, color: "#efdcaf" }, // yellow-600
 ];
 // const aiScoreDistribution = [
 //   { range: "0-20%", count: 5, color: "#b5800a" },
@@ -394,19 +394,19 @@ const AdminPage: React.FC = () => {
                     <Line
                       type="monotone"
                       dataKey="total"
-                      stroke="hsl(var(--primary))"
+                      stroke="#2e314e"
                       strokeWidth={2}
                     />
                     <Line
                       type="monotone"
                       dataKey="approved"
-                      stroke="hsl(var(--success))"
+                      stroke="#b5800a"
                       strokeWidth={2}
                     />
                     <Line
                       type="monotone"
                       dataKey="rejected"
-                      stroke="hsl(var(--destructive))"
+                      stroke="#911235"
                       strokeWidth={2}
                     />
                   </LineChart>
