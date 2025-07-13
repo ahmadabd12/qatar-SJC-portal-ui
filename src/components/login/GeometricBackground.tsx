@@ -1,15 +1,11 @@
 import React from "react";
+// import logoAr from "../../../public/logo-ar.svg";
 const GeometricBackground: React.FC = () => {
   return (
     <div className="hidden lg:flex lg:w-1/2 bg-gray-50 relative overflow-hidden">
       {/* Geometric Shapes Pattern */}
-      <div className="flex justify-center w-full">
-        <img
-          src="/hummer.svg"
-          className="p-8 mx-auto"
-          style={{ width: "75%" }}
-        />
-      </div>
+      {/* <img src={logoAr} className="p-8" /> */}
+      <img src="/hummer.svg" className="p-8 mx-auto" style={{ width: "75%" }} />
       {/* Floating dots pattern */}
       <div className="absolute inset-0">
         {Array.from({ length: 30 }).map((_, i) => (
