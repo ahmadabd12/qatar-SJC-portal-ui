@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ITClogo from "../../../public/ITC-Portal.svg";
 import { useNavigate } from "react-router-dom";
 import { useAuth, User } from "../../contexts/AuthContext";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -61,7 +60,7 @@ const LoginForm: React.FC = () => {
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
             <img
-              src={ITClogo}
+              src="/ITC-Portal.svg"
               width={220}
               alt="SJC Logo"
               className="object-contain"
