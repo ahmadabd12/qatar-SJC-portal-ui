@@ -90,12 +90,12 @@ const Header: React.FC = () => {
               alt="Logo"
               className="h-10 w-auto px-4"
             />
-            <Search className="h-5 w-5 text-gray-400" />
+            {/* <Search className="h-5 w-5 text-gray-400" />
             <input
               type="text"
               placeholder={t("common.search")}
               className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-800 focus:border-transparent"
-            />
+            /> */}
           </div>
         </div>
 

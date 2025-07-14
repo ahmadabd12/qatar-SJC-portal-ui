@@ -51,7 +51,7 @@
     "viewDocument": "View Document",
     "approvePublish": "Approve & Publish",
     "requestReprocess": "Request Reprocess",
-    "AIConfidence": "AI Confidence"
+    "AIConfidence": " AI Confidence Score"
   },
   "review": {
     "title": "Review Workflow Queue",

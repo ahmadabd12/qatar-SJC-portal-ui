@@ -84,9 +84,9 @@ const DashboardPage: React.FC = () => {
   const pieData =
     i18n.language === "ar"
       ? [
-          { name: "تمت الموافقة", value: 85, color: "#911235" },
+          { name: "تمت الموافقة", value: 85, color: "#efdcaf" },
           { name: "قيد الانتظار", value: 10, color: "#2e314e" },
-          { name: "مرفوض", value: 5, color: "#efdcaf" },
+          { name: "مرفوض", value: 5, color: "#911235" },
         ]
       : [
           { name: "Approved", value: 85, color: "#efdcaf" },
@@ -148,10 +148,10 @@ const DashboardPage: React.FC = () => {
               : `Welcome back, ${user?.name}`}
           </p>
         </div>
-        <Button className="bg-maroon-800 hover:bg-indigo-800 text-white">
+        {/* <Button className="bg-maroon-800 hover:bg-indigo-800 text-white">
           {t("dashboard.uploadDocument")}
           <Upload className="mr-2 h-4 w-4 rtl:ml-2 rtl:mr-0" />
-        </Button>
+        </Button> */}
       </div>
 
       {/* Stats Grid */}

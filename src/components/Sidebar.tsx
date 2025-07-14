@@ -107,7 +107,7 @@ const Sidebar: React.FC = () => {
       </nav>
 
       <div className="p-4 border-t border-white/10">
-        <div className="text-xs text-maroon-300 text-center">
+        <div className="text-xs text-white/80 text-center">
           {isRTL
             ? "© 2025 السلطة القضائية العليا – دولة قطر. جميع الحقوق محفوظة."
             : "© 2025 Supreme Judiciary, State of Qatar. All rights reserved."}
