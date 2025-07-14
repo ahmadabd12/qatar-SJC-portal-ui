@@ -505,11 +505,14 @@ const SettingsPage: React.FC = () => {
                   </div> */}
                 </div>
 
-                <Button onClick={handleSaveSystemSettings} className="w-full">
-                  <Save className="h-4 w-4 mr-2" />
+                <Button
+                  onClick={handleSaveSystemSettings}
+                  className="w-full bg-indigo-800 hover:bg-indigo-800/90 text-white"
+                >
                   {i18n.language === "ar"
                     ? "حفظ إعدادات الذكاء الاصطناعي"
                     : "Save AI Settings"}
+                  <Save className="h-4 w-4 mr-2" />
                 </Button>
               </CardContent>
             </Card>
