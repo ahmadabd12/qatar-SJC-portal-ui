@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTranslation } from "react-i18next";
-import { Bell, Search, User, LogOut, Globe } from "lucide-react";
+import { Bell, Search, User, LogOut, Globe, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -40,7 +40,11 @@ const notifications = [
   },
 ];
 
-const Header: React.FC = () => {
+type HeaderProps = {
+  onMenuClick?: () => void;
+};
+
+const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const { user, logout } = useAuth();
   const { language, toggleLanguage, isRTL } = useLanguage();
   const { t } = useTranslation();
@@ -81,15 +85,31 @@ const Header: React.FC = () => {
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
-      <div className="flex items-center justify-between px-6 py-4">
-        <div className="flex items-center space-x-4 rtl:space-x-reverse">
-          <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            <img src="/logo-ar.svg" alt="LogoAr" className="h-10 w-auto px-4" />
-            <img
-              src="/ITC-Portal.svg"
-              alt="Logo"
-              className="h-10 w-auto px-4"
-            />
+      <div className="flex flex-wrap items-center justify-between px-4 md:px-6 py-3 md:py-4 gap-y-2 md:gap-y-4 xl:gap-y-0">
+        <div className="flex items-center space-x-2 md:space-x-4 rtl:space-x-reverse">
+          {/* Hamburger menu for mobile */}
+          {onMenuClick && (
+            <button
+              className="md:hidden mr-2 p-2 rounded focus:outline-none focus:ring-2 focus:ring-maroon-800"
+              onClick={onMenuClick}
+              aria-label="Open sidebar menu"
+            >
+              <Menu className="h-6 w-6 text-maroon-800" />
+            </button>
+          )}
+          {/* Logo: show only one on mobile, both on md+ */}
+          <img
+            src="/logo-ar.svg"
+            alt="LogoAr"
+            className="h-8 w-auto px-2 md:h-10 md:px-4"
+          />
+          <img
+            src="/ITC-Portal.svg"
+            alt="Logo"
+            className="h-8 w-auto px-2 hidden md:block md:h-10 md:px-4"
+          />
+          {/* Search bar: hidden on mobile */}
+          <div className="hidden md:flex items-center space-x-2 rtl:space-x-reverse">
             {/* <Search className="h-5 w-5 text-gray-400" />
             <input
               type="text"
@@ -98,8 +118,8 @@ const Header: React.FC = () => {
             /> */}
           </div>
         </div>
-
-        <div className="flex items-center space-x-4 rtl:space-x-reverse">
+        {/* User actions: always visible, stack vertically on mobile if needed */}
+        <div className="flex items-center space-x-2 md:space-x-4 rtl:space-x-reverse mt-2 md:mt-0 w-full justify-center xl:w-auto xl:justify-end">
           <Button
             variant="ghost"
             size="sm"
@@ -107,9 +127,10 @@ const Header: React.FC = () => {
             className="flex items-center space-x-2 rtl:space-x-reverse"
           >
             <Globe className="h-4 w-4" />
-            <span>{language === "en" ? "العربية" : "English"}</span>
+            <span className="hidden sm:inline">
+              {language === "en" ? "العربية" : "English"}
+            </span>
           </Button>
-
           {/* Notification Dropdown */}
           <div className="relative" ref={notifRef}>
             <Button
@@ -158,7 +179,6 @@ const Header: React.FC = () => {
               </div>
             )}
           </div>
-
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

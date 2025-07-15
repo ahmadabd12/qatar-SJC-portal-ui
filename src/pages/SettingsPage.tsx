@@ -209,7 +209,7 @@ const SettingsPage: React.FC = () => {
         onValueChange={setActiveTab}
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
       >
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="p-2 w-full flex flex-row justify-start overflow-x-auto overflow-y-hidden md:grid md:grid-cols-4 gap-2 scrollbar-hide">
           <TabsTrigger value="keywords">
             {t("admin.maskingKeywords")}
           </TabsTrigger>
@@ -222,7 +222,7 @@ const SettingsPage: React.FC = () => {
           {/* Keywords Management */}
           <Card>
             <CardHeader>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col md:flex-row gap-2  justify-between">
                 <CardTitle className="flex items-center">
                   {i18n.language === "ar"
                     ? "كلمات الإخفاء"

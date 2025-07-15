@@ -13,7 +13,11 @@ import {
   Scale,
 } from "lucide-react";
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  setSidebarOpen: (open: boolean) => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ setSidebarOpen }) => {
   const { user } = useAuth();
   const { isRTL } = useLanguage();
   const { t } = useTranslation();
@@ -65,7 +69,7 @@ const Sidebar: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className="bg-indigo-800 text-white w-64 min-h-screen flex flex-col">
+    <div className="bg-indigo-800 text-white h-full flex flex-col">
       <div className="p-6 border-b border-white/10">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           {/* <div className="flex items-center justify-center w-40 h-20 bg-white rounded-lg p-1">
@@ -93,6 +97,7 @@ const Sidebar: React.FC = () => {
             <NavLink
               key={item.href}
               to={item.href}
+              onClick={() => setSidebarOpen(false)}
               className={`flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg transition-colors ${
                 isActive(item.href)
                   ? "bg-white text-maroon-800 border-r-4 border-maroon-800 rtl:border-r-0 rtl:border-l-4"
@@ -107,7 +112,7 @@ const Sidebar: React.FC = () => {
       </nav>
 
       <div className="p-4 border-t border-white/10">
-        <div className="text-xs text-white/80 text-center">
+        <div className="text-xs text-white-300 text-center">
           {isRTL
             ? "© 2025 السلطة القضائية العليا – دولة قطر. جميع الحقوق محفوظة."
             : "© 2025 Supreme Judiciary, State of Qatar. All rights reserved."}

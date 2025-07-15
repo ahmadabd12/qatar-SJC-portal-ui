@@ -260,13 +260,13 @@ const AuditPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row gap-2 justify-between">
         <div>
           <h1 className="text-3xl font-bold text-foreground">
             {t("admin.auditLogs")}
           </h1>
           <p className="text-muted-foreground mt-2">
-            System activity and user action tracking
+            {t("admin.auditLogsDescription")}
           </p>
         </div>
         <Button
@@ -494,14 +494,14 @@ const AuditPage: React.FC = () => {
       <Card>
         <CardHeader>
           <div
-            className={`flex items-center justify-between ${
+            className={`flex flex-col md:flex-row gap-2  justify-between ${
               i18n.language === "ar" ? "rtl" : ""
             }`}
           >
             <CardTitle>
               {i18n.language === "ar" ? "سجلات التدقيق" : "Audit Log Entries"}
             </CardTitle>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground/70">
               {i18n.language === "ar"
                 ? `عرض ${startIndex + 1}-${Math.min(
                     startIndex + logsPerPage,

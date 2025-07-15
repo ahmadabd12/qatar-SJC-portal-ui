@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Card,
@@ -138,11 +138,21 @@ const systemErrors = [
     status: "active",
   },
 ];
-
+// Add a custom hook for screen size
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+  return isMobile;
+}
 const AdminPage: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState("overview");
-
+  const isMobile = useIsMobile();
   const retryOperation = (errorId: number) => {
     console.log("Retrying operation for error:", errorId);
   };
@@ -178,7 +188,7 @@ const AdminPage: React.FC = () => {
         onValueChange={setActiveTab}
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
       >
-        <TabsList className={`grid w-full grid-cols-4`}>
+        <TabsList className=" p-2 w-full flex flex-row justify-start overflow-x-auto overflow-y-hidden md:grid md:grid-cols-4 gap-2 scrollbar-hide">
           <TabsTrigger value="overview">
             {i18n.language === "ar" ? "نظرة عامة" : "Overview"}
           </TabsTrigger>
@@ -374,7 +384,7 @@ const AdminPage: React.FC = () => {
           </Card>
         </TabsContent>
 
-        <TabsContent value="analytics" className="space-y-6">
+        <TabsContent value="analytics" className="space-y-6 w-full ">
           {/* Document Processing Chart */}
           <Card>
             <CardHeader>
@@ -385,7 +395,7 @@ const AdminPage: React.FC = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ChartContainer config={{}} className="h-[300px]">
+              {/* <ChartContainer config={{}} className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={documentStats}>
                     <XAxis dataKey="name" />
@@ -411,7 +421,43 @@ const AdminPage: React.FC = () => {
                     />
                   </LineChart>
                 </ResponsiveContainer>
-              </ChartContainer>
+              </ChartContainer> */}
+              <div className="w-full overflow-x-auto">
+                <div className="min-w-[400px]">
+                  <ChartContainer
+                    config={{}}
+                    className="h-[200px] md:h-[300px]"
+                  >
+                    {
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={documentStats}>
+                          <XAxis dataKey="name" />
+                          <YAxis width={20} />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Line
+                            type="monotone"
+                            dataKey="total"
+                            stroke="#2e314e"
+                            strokeWidth={2}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="approved"
+                            stroke="#b5800a"
+                            strokeWidth={2}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="rejected"
+                            stroke="#911235"
+                            strokeWidth={2}
+                          />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    }
+                  </ChartContainer>
+                </div>
+              </div>
             </CardContent>
           </Card>
 
@@ -426,26 +472,33 @@ const AdminPage: React.FC = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <ChartContainer config={{}} className="h-[250px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={aiScoreDistribution}
-                        dataKey="count"
-                        nameKey="range"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        label={({ range, count }) => `${range}: ${count}`}
-                      >
-                        {aiScoreDistribution.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </ChartContainer>
+                <div className="w-full overflow-x-auto">
+                  <div className="min-w-[400px]">
+                    <ChartContainer
+                      config={{}}
+                      className="h-fit-content md:h-[300px]"
+                    >
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={aiScoreDistribution}
+                            dataKey="count"
+                            nameKey="range"
+                            cx={isMobile ? "30%" : "50%"}
+                            cy="50%"
+                            outerRadius={80}
+                            label={({ range, count }) => `${range}: ${count}`}
+                          >
+                            {aiScoreDistribution.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </ChartContainer>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
@@ -498,7 +551,7 @@ const AdminPage: React.FC = () => {
         <TabsContent value="users" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center justify-between">
+              <CardTitle className="flex flex-col md:flex-row gap-2  justify-between">
                 {i18n.language === "ar"
                   ? "إدارة المستخدمين"
                   : "User Management"}
@@ -634,7 +687,7 @@ const AdminPage: React.FC = () => {
           </Card>
         </TabsContent>
 
-        <TabsContent value="system" className="space-y-6">
+        {/* <TabsContent value="system" className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
@@ -756,12 +809,12 @@ const AdminPage: React.FC = () => {
               </CardContent>
             </Card>
           </div>
-        </TabsContent>
+        </TabsContent> */}
 
         <TabsContent value="errors" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center justify-between">
+              <CardTitle className="flex flex-col md:flex-row gap-2  justify-between">
                 {i18n.language === "ar"
                   ? "سجلات أخطاء النظام"
                   : "System Error Logs"}

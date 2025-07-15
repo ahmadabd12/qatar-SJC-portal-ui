@@ -67,6 +67,7 @@
     "userManagement": "User Management",
     "systemSettings": "System Settings",
     "auditLogs": "Audit Logs",
+    "auditLogsDescription": "System activity and user action tracking",
     "maskingKeywords": "Masking Keywords",
     "integrationSettings": "Integration Settings",
     "aiSettings": "AI Settings",

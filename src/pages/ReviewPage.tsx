@@ -278,8 +278,8 @@ const ReviewPage: React.FC = () => {
     return i18n.language === "ar" ? (
       <div className="space-y-6 rtl">
         {/* Header with back button */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4 rtl:space-x-reverse">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 rtl:space-x-reverse">
             <Button
               variant="outline"
               onClick={() => setSelectedDocument(null)}
@@ -290,15 +290,22 @@ const ReviewPage: React.FC = () => {
                   i18n.language === "ar" ? " rotate-180" : ""
                 }`}
               />
-              <span>رجوع إلى المستندات</span>
+              <span>
+                {i18n.language === "ar"
+                  ? "رجوع إلى المستندات"
+                  : "Back to Documents"}
+              </span>
             </Button>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
-                مراجعة المستند: {selectedDocument.name}
+                {i18n.language === "ar"
+                  ? `مراجعة المستند: ${selectedDocument.name}`
+                  : `Document Review: ${selectedDocument.name}`}
               </h1>
               <p className="text-gray-600 mt-1">
-                القضية {selectedDocument.caseNumber} • دقة الذكاء الاصطناعي:{" "}
-                {selectedDocument.aiConfidence}%
+                {i18n.language === "ar"
+                  ? `القضية ${selectedDocument.caseNumber} • دقة الذكاء الاصطناعي: ${selectedDocument.aiConfidence}%`
+                  : `Case ${selectedDocument.caseNumber} • AI Confidence: ${selectedDocument.aiConfidence}%`}
               </p>
             </div>
           </div>
@@ -417,24 +424,28 @@ const ReviewPage: React.FC = () => {
         {/* Action Buttons */}
         <Card>
           <CardContent className="p-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <GitCompareArrows className="h-5 w-5 text-gray-500" />
                 <div>
-                  <h3 className="font-medium">قرار المراجعة</h3>
+                  <h3 className="font-medium">
+                    {isRTL ? "قرار المراجعة" : "Review Decision"}
+                  </h3>
                   <p className="text-sm text-gray-600">
-                    قارن بين المستندين واتخذ قرارًا بشأن جودة الحجب
+                    {isRTL
+                      ? "قارن بين المستندين واتخذ قرارًا بشأن جودة الحجب"
+                      : "Compare both documents and decide on the redaction quality"}
                   </p>
                 </div>
               </div>
-              <div className="flex space-x-3 rtl:space-x-reverse">
+              <div className="flex flex-col md:flex-row gap-3">
                 <Button
                   variant="outline"
                   onClick={handleRequestChanges}
                   className="flex items-center space-x-2 rtl:space-x-reverse"
                 >
                   <RefreshCw className="h-4 w-4" />
-                  <span>طلب تعديلات</span>
+                  <span>{isRTL ? "طلب تعديلات" : "Request Changes"}</span>
                 </Button>
                 <Button
                   variant="outline"
@@ -442,14 +453,14 @@ const ReviewPage: React.FC = () => {
                   className="flex items-center space-x-2 rtl:space-x-reverse text-red-600 border-red-600 hover:bg-red-50"
                 >
                   <XCircle className="h-4 w-4" />
-                  <span>رفض</span>
+                  <span>{isRTL ? "رفض" : "Reject"}</span>
                 </Button>
                 <Button
                   onClick={handleApprove}
                   className="bg-green-700 hover:bg-green-600 text-white flex items-center space-x-2 rtl:space-x-reverse"
                 >
                   <CheckCircle className="h-4 w-4" />
-                  <span>قبول ونشر</span>
+                  <span>{isRTL ? "قبول ونشر" : "Approve & Publish"}</span>
                 </Button>
               </div>
             </div>
@@ -459,8 +470,8 @@ const ReviewPage: React.FC = () => {
     ) : (
       <div className="space-y-6">
         {/* Header with back button */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4 rtl:space-x-reverse">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 rtl:space-x-reverse">
             <Button
               variant="outline"
               onClick={() => setSelectedDocument(null)}
@@ -599,24 +610,28 @@ const ReviewPage: React.FC = () => {
         {/* Action Buttons */}
         <Card>
           <CardContent className="p-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <GitCompareArrows className="h-5 w-5 text-gray-500" />
                 <div>
-                  <h3 className="font-medium">Review Decision</h3>
+                  <h3 className="font-medium">
+                    {isRTL ? "قرار المراجعة" : "Review Decision"}
+                  </h3>
                   <p className="text-sm text-gray-600">
-                    Compare both documents and decide on the redaction quality
+                    {isRTL
+                      ? "قارن بين المستندين واتخذ قرارًا بشأن جودة الحجب"
+                      : "Compare both documents and decide on the redaction quality"}
                   </p>
                 </div>
               </div>
-              <div className="flex space-x-3 rtl:space-x-reverse">
+              <div className="flex flex-col md:flex-row gap-3">
                 <Button
                   variant="outline"
                   onClick={handleRequestChanges}
                   className="flex items-center space-x-2 rtl:space-x-reverse"
                 >
                   <RefreshCw className="h-4 w-4" />
-                  <span>Request Changes</span>
+                  <span>{isRTL ? "طلب تعديلات" : "Request Changes"}</span>
                 </Button>
                 <Button
                   variant="outline"
@@ -624,14 +639,14 @@ const ReviewPage: React.FC = () => {
                   className="flex items-center space-x-2 rtl:space-x-reverse text-red-600 border-red-600 hover:bg-red-50"
                 >
                   <XCircle className="h-4 w-4" />
-                  <span>Reject</span>
+                  <span>{isRTL ? "رفض" : "Reject"}</span>
                 </Button>
                 <Button
                   onClick={handleApprove}
                   className="bg-green-700 hover:bg-green-600 text-white flex items-center space-x-2 rtl:space-x-reverse"
                 >
                   <CheckCircle className="h-4 w-4" />
-                  <span>Approve & Publish</span>
+                  <span>{isRTL ? "قبول ونشر" : "Approve & Publish"}</span>
                 </Button>
               </div>
             </div>
@@ -716,25 +731,28 @@ const ReviewPage: React.FC = () => {
       <Card>
         <CardHeader>
           <div
-            className={`flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between${
+            className={`flex flex-col md:flex-row gap-4 items-stretch md:items-center${
               isRTL ? " rtl" : ""
             }`}
           >
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder={t("common.search")}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-9 w-64"
-                />
-              </div>
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder={t("common.search")}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-9 w-full md:w-64"
+              />
+            </div>
+            <div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <Filter className="h-4 w-4 mr-2" />
-                    {t("common.filter")}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full md:w-auto"
+                  >
+                    <Filter className="h-4 w-4 mr-2" /> {t("common.filter")}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -757,44 +775,6 @@ const ReviewPage: React.FC = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-
-            {selectedDocuments.length > 0 && (
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <span className="text-sm text-muted-foreground">
-                  {selectedDocuments.length} {isRTL ? "محدد" : "selected"}
-                </span>
-                <Button onClick={handleBulkApprove} size="sm" variant="default">
-                  {isRTL ? (
-                    <>
-                      <span>{t("review.bulkApprove")}</span>
-                      <CheckCircle className="h-4 w-4 mr-2" />
-                    </>
-                  ) : (
-                    <>
-                      <CheckCircle className="h-4 w-4 mr-2" />
-                      <span>{t("review.bulkApprove")}</span>
-                    </>
-                  )}
-                </Button>
-                <Button
-                  onClick={handleBulkReject}
-                  size="sm"
-                  variant="destructive"
-                >
-                  {isRTL ? (
-                    <>
-                      <span>رفض جماعي</span>
-                      <XCircle className="h-4 w-4 mr-2" />
-                    </>
-                  ) : (
-                    <>
-                      <XCircle className="h-4 w-4 mr-2" />
-                      <span>Bulk Reject</span>
-                    </>
-                  )}
-                </Button>
-              </div>
-            )}
           </div>
         </CardHeader>
 

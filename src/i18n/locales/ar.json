@@ -67,6 +67,7 @@
     "userManagement": "إدارة المستخدمين",
     "systemSettings": "إعدادات النظام",
     "auditLogs": "سجلات التدقيق",
+    "auditLogsDescription": "تتبع نشاط النظام وإجراءات المستخدم",
     "maskingKeywords": "كلمات الإخفاء",
     "integrationSettings": "إعدادات التكامل",
     "aiSettings": "إعدادات الذكاء الاصطناعي",
