@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Card,
@@ -149,6 +149,7 @@ function useIsMobile() {
   }, []);
   return isMobile;
 }
+const tabValues = ["overview", "analytics", "users", "errors"];
 const AdminPage: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState("overview");
@@ -160,6 +161,19 @@ const AdminPage: React.FC = () => {
   const exportReport = () => {
     console.log("Exporting admin report...");
   };
+
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const idx = tabValues.indexOf(activeTab);
+    if (idx !== -1 && tabRefs.current[idx]) {
+      tabRefs.current[idx]?.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  }, [activeTab]);
 
   return (
     <div className="space-y-6" dir={i18n.language === "ar" ? "rtl" : "ltr"}>
@@ -188,14 +202,17 @@ const AdminPage: React.FC = () => {
         onValueChange={setActiveTab}
         dir={i18n.language === "ar" ? "rtl" : "ltr"}
       >
-        <TabsList className=" p-2 w-full flex flex-row justify-start overflow-x-auto overflow-y-hidden md:grid md:grid-cols-4 gap-2 scrollbar-hide">
-          <TabsTrigger value="overview">
+        <TabsList className="p-2 w-full flex flex-row justify-start overflow-x-auto overflow-y-hidden md:grid md:grid-cols-4 gap-2 scrollbar-hide">
+          <TabsTrigger value="overview" ref={(el) => (tabRefs.current[0] = el)}>
             {i18n.language === "ar" ? "نظرة عامة" : "Overview"}
           </TabsTrigger>
-          <TabsTrigger value="analytics">
+          <TabsTrigger
+            value="analytics"
+            ref={(el) => (tabRefs.current[1] = el)}
+          >
             {i18n.language === "ar" ? "التقارير" : t("admin.reports")}
           </TabsTrigger>
-          <TabsTrigger value="users">
+          <TabsTrigger value="users" ref={(el) => (tabRefs.current[2] = el)}>
             {i18n.language === "ar"
               ? "إدارة المستخدمين"
               : t("admin.userManagement")}
@@ -205,7 +222,7 @@ const AdminPage: React.FC = () => {
               ? "إعدادات النظام"
               : t("admin.systemSettings")}
           </TabsTrigger> */}
-          <TabsTrigger value="errors">
+          <TabsTrigger value="errors" ref={(el) => (tabRefs.current[3] = el)}>
             {i18n.language === "ar" ? "سجلات الأخطاء" : "Error Logs"}
           </TabsTrigger>
         </TabsList>

@@ -548,7 +548,7 @@ const DocumentsPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {i18n.language === "ar" ? (
-        <div className="flex items-center justify-between ">
+        <div className="flex flex-col md:flex-row gap-2 md:gap-0 md:items-center justify-between ">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">المستندات</h1>
             <p className="text-gray-600 mt-1">
@@ -570,7 +570,7 @@ const DocumentsPage: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-between ">
+        <div className="flex flex-col md:flex-row gap-2 md:gap-0 md:items-center justify-between ">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Documents</h1>
             <p className="text-gray-600 mt-1">
@@ -578,13 +578,13 @@ const DocumentsPage: React.FC = () => {
             </p>
           </div>
           <div className="flex space-x-2 rtl:space-x-reverse">
-            <Button
+            {/* <Button
               variant="outline"
               className="flex items-center space-x-2 rtl:space-x-reverse"
             >
               <span>Export</span>
               <Download className="h-4 w-4" />
-            </Button>
+            </Button> */}
             <Button className="bg-maroon-800 hover:bg-indigo-800 text-white flex items-center space-x-2 rtl:space-x-reverse">
               <span>{t("dashboard.uploadDocument")}</span>
               <Upload className="h-4 w-4" />
