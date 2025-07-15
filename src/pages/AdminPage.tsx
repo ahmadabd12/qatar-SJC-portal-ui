@@ -188,6 +188,7 @@ const AdminPage: React.FC = () => {
               : "Comprehensive system management and analytics"}
           </p>
         </div>
+        {/* //Button to export report */}
         {/* <Button
           onClick={exportReport}
           className="bg-indigo-800 hover:bg-indigo-800/90 text-white"
