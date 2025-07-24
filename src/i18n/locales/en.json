@@ -31,6 +31,7 @@
   },
   "dashboard": {
     "title": "Document Management Dashboard",
+    "welcomeMessage": "Welcome back",
     "totalDocuments": "Total Documents",
     "pendingReview": "Pending Review",
     "approved": "Approved",
